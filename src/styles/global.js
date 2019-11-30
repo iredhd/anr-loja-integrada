@@ -15,6 +15,5 @@ export default createGlobalStyle`
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
-        // background-color: #e4f8f4;
     }
 `;
