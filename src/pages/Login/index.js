@@ -1,27 +1,53 @@
 import React, { useState } from 'react';
 import { Form } from 'react-bootstrap';
-import { LoginPanel, LoginForm, LoginButton, LoginInputGroup } from './styles';
+import propTypes from 'prop-types';
 
-const Login = () => {
+import { LoginPanel, LoginForm, LoginButton, LoginInputGroup, LoginLogo } from './styles';
+import Input from '../../components/Input';
+
+const Login = props => {
   const [isLoading, setLoading] = useState(false);
+  const [form, setForm] = useState({
+    user: '',
+    password: ''
+  });
+  const handleSignUp = e => {
+    e.preventDefault();
+    setLoading(true);
+    // props.history.push('/home');
+    console.log(form);
+  };
 
   return (
     <LoginPanel>
-      <LoginForm>
+      <LoginLogo />
+      <LoginForm onSubmit={handleSignUp}>
         <LoginInputGroup>
-          <Form.Control type="text" placeholder="Usuário" />
-          <Form.Control type="password" placeholder="Senha" />
+          <Input
+            type="text"
+            placeholder="Usuário"
+            onChange={e => setForm({ ...form, user: e.target.value })}
+          />
+          <Input
+            type="password"
+            placeholder="Senha"
+            onChange={e => setForm({ ...form, password: e.target.value })}
+          />
         </LoginInputGroup>
         <LoginButton
           variant="primary"
+          type="submit"
           disabled={isLoading}
-          onClick={() => !isLoading ? setLoading(true) : false}
         >
           {isLoading ? 'Entrando...' : 'Entrar'}
         </LoginButton>
       </LoginForm>
     </LoginPanel>
   );
+};
+
+Login.propTypes = {
+  history: propTypes.object.isRequired
 };
 
 export default Login;
