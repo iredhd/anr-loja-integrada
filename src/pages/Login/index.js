@@ -4,7 +4,7 @@ import propTypes from 'prop-types';
 import { LoginPanel, LoginForm, LoginButton, LoginInputGroup, LoginLogo } from './styles';
 import Input from '../../components/Input';
 
-const Login = props => {
+const Login = ({ history }) => {
   const [isLoading, setLoading] = useState(false);
   const [form, setForm] = useState({
     user: '',
@@ -14,8 +14,7 @@ const Login = props => {
   const handleSignUp = e => {
     e.preventDefault();
     setLoading(true);
-    props.history.push('/home');
-    console.log(form);
+    history.push('/home');
   };
 
   return (

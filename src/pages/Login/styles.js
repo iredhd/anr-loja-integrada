@@ -2,23 +2,20 @@ import styled from 'styled-components';
 import { Form } from 'react-bootstrap';
 import logo from '../../assets/logo.png';
 import Button from '../../components/Button';
+import Panel from '../../components/Panel';
 
-export const LoginPanel = styled.div`
-    background-color: white;
-    border-radius: 5px;
-    width: 30%;
-    padding: 25px;
-    min-width: 300px;
-    max-width: 450px;
-    box-shadow: 0 0 0 3px rgba(${({ theme }) => theme.DefaultColors.primary},.5);
+export const LoginPanel = styled(Panel)`
+  width: 30%;
+  min-width: 300px;
+  max-width: 450px;
 `;
 
 export const LoginForm = styled(Form)`
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 export const LoginButton = styled(Button)`
