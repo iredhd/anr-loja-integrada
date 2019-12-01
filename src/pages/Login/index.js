@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Form } from 'react-bootstrap';
 import propTypes from 'prop-types';
 
 import { LoginPanel, LoginForm, LoginButton, LoginInputGroup, LoginLogo } from './styles';
@@ -11,10 +10,11 @@ const Login = props => {
     user: '',
     password: ''
   });
+
   const handleSignUp = e => {
     e.preventDefault();
     setLoading(true);
-    // props.history.push('/home');
+    props.history.push('/home');
     console.log(form);
   };
 
