@@ -18,7 +18,6 @@ Typography.defaultProps = {
 };
 
 Typography.propTypes = {
-  theme: PropTypes.object.isRequired,
   fontSize: PropTypes.string,
   fontWeight: PropTypes.string,
   fontColor: PropTypes.string,

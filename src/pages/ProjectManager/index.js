@@ -1,43 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { ProjectManagerLogo, ProjectManagerPanel, ProjectCard, ProjectCardInfo, ProjectCardActions } from './styles';
-import { Typography, View, Button } from '../../components';
+import { Panel, View, Typography } from '../../components';
+import { ProjectManagerLogo } from './styles';
 
-const ProjectManager = ({ history }) => {
-  return (
-    <ProjectManagerPanel>
-      <ProjectManagerLogo />
-      <ProjectCard>
-        <ProjectCardInfo>
-          <View>
-            <Typography fontWeight="bold">SKU: </Typography>
-            <Typography>
-                C9JDJ8SXA
-            </Typography>
-          </View>
-          <View>
-            <Typography fontWeight="bold">Nome: </Typography>
-            <Typography>
-            [PROJETO] Maleta Tildinha
-            </Typography>
-          </View>
-        </ProjectCardInfo>
-        <ProjectCardActions>
-          <Button onClick={() => history.push('/projects-manager/1')}>
-              Editar
-          </Button>
-          <Button color="danger" onClick={() => history.push('/projects-manager/1')}>
-              Excluir
-          </Button>
-        </ProjectCardActions>
-      </ProjectCard>
-    </ProjectManagerPanel>
-  );
-};
+const ProjectManager = ({ history, match: { params: { id } } }) => (
+  <Panel>
+    <ProjectManagerLogo />
+    <View>
+      <Typography fontWeight="bold">{`ID: ${id}`}</Typography>
+    </View>
+  </Panel>
+);
 
 ProjectManager.propTypes = {
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string
+    })
+  }).isRequired
 };
 
 export default ProjectManager;

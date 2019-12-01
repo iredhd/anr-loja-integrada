@@ -5,6 +5,7 @@ import Input from './Input';
 import Panel from './Panel';
 import Typography from './Typography';
 import View from './View';
+import Logo from './Logo';
 
 export {
   Button,
@@ -13,5 +14,6 @@ export {
   Input,
   Panel,
   Typography,
-  View
+  View,
+  Logo
 };

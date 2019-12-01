@@ -18,6 +18,7 @@ const StyledButton = styled(Button)`
   :hover {
     background-color: rgba(${({ theme }) => theme.DefaultColors.primary}, 0.8);
     border-color: rgb(${({ theme }) => theme.DefaultColors.primary}, 0.8); 
+    transform: scale(1.05);
   }
 
   :disabled {

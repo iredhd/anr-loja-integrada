@@ -1,12 +1,9 @@
 import styled from 'styled-components';
 import { Form } from 'react-bootstrap';
-import logo from '../../assets/logo.png';
-import { Panel, Button } from '../../components';
+import { Panel, Button, Logo } from '../../components';
 
 export const LoginPanel = styled(Panel)`
   width: 30%;
-  min-width: 300px;
-  max-width: 450px;
 `;
 
 export const LoginForm = styled(Form)`
@@ -33,11 +30,7 @@ export const LoginInputGroup = styled(Form.Group)`
   }
 `;
 
-export const LoginLogo = styled.div`
-  background-image: url(${logo});
+export const LoginLogo = styled(Logo)`
   height: 100px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
   margin-bottom: 10px;
 `;
