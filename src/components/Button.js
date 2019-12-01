@@ -11,9 +11,15 @@ export default styled(Button)`
         border-color: rgb(${({ theme }) => theme.DefaultColors.primary}, 0.8); 
     }
 
-    :active, :disabled {
+    :disabled {
         background-color: rgb(${({ theme }) => theme.DefaultColors.primary});
         border-color: rgb(${({ theme }) => theme.DefaultColors.primary});
+    }
+
+    :active {
+        background-color: rgb(${({ theme }) => theme.DefaultColors.primary}) !important;
+        border-color: rgb(${({ theme }) => theme.DefaultColors.primary}) !important;
+        box-shadow: 0 0 0 0.2rem rgba(${({ theme }) => theme.DefaultColors.primary},.5) !important;
     }
 
     :focus {
