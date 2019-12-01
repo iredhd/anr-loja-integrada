@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import IconButton from '../../components/IconButton';
-import Panel from '../../components/Panel';
+import { IconButton, Panel } from '../../components';
 
 export const HomePanel = styled(Panel)`
   display: flex;

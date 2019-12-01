@@ -1,5 +1,5 @@
 import React from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import { HomePanel, HomeButton } from './styles';
 
@@ -21,7 +21,7 @@ const Home = ({ history }) => {
 };
 
 Home.propTypes = {
-  history: propTypes.object.isRequired
+  history: PropTypes.object.isRequired
 };
 
 export default Home;

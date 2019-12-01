@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 const Icon = ({ size, icon }) => (
   <FontAwesomeIcon size={size} icon={['fas', `${icon}`]} />
@@ -11,8 +11,8 @@ Icon.defaultProps = {
 };
 
 Icon.propTypes = {
-  size: propTypes.string,
-  icon: propTypes.string.isRequired
+  size: PropTypes.string,
+  icon: PropTypes.string.isRequired
 };
 
 export default Icon;

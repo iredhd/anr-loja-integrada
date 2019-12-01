@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Button } from 'react-bootstrap';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import Icon from './Icon';
 
@@ -55,9 +55,9 @@ IconButton.defaultProps = {
 };
 
 IconButton.propTypes = {
-  icon: propTypes.string.isRequired,
-  iconSize: propTypes.string,
-  children: propTypes.string
+  icon: PropTypes.string.isRequired,
+  iconSize: PropTypes.string,
+  children: PropTypes.string
 };
 
 export default IconButton;

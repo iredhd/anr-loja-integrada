@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 const Panel = styled.div`
   background-color: white;
@@ -9,7 +9,7 @@ const Panel = styled.div`
 `;
 
 Panel.propTypes = {
-  theme: propTypes.object.isRequired
+  theme: PropTypes.object.isRequired
 };
 
 export default Panel;

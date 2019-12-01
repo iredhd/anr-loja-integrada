@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import { LoginPanel, LoginForm, LoginButton, LoginInputGroup, LoginLogo } from './styles';
-import Input from '../../components/Input';
+import { Input } from '../../components';
 
 const Login = ({ history }) => {
   const [isLoading, setLoading] = useState(false);
@@ -46,7 +46,7 @@ const Login = ({ history }) => {
 };
 
 Login.propTypes = {
-  history: propTypes.object.isRequired
+  history: PropTypes.object.isRequired
 };
 
 export default Login;

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Form } from 'react-bootstrap';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 const Input = styled(Form.Control)`
   :focus {
@@ -10,7 +10,7 @@ const Input = styled(Form.Control)`
 `;
 
 Input.propTypes = {
-  theme: propTypes.object.isRequired
+  theme: PropTypes.object.isRequired
 };
 
 export default Input;

@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 import { Form } from 'react-bootstrap';
 import logo from '../../assets/logo.png';
-import Button from '../../components/Button';
-import Panel from '../../components/Panel';
+import { Panel, Button } from '../../components';
 
 export const LoginPanel = styled(Panel)`
   width: 30%;
@@ -19,26 +18,26 @@ export const LoginForm = styled(Form)`
 `;
 
 export const LoginButton = styled(Button)`
-    width: 50%;
+  width: 50%;
 `;
 
 export const LoginInputGroup = styled(Form.Group)`
-    height: 50%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  height: 50%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
-    input {
-        margin: 5px 0px 5px 0px
-    }
+  input {
+      margin: 5px 0px 5px 0px
+  }
 `;
 
 export const LoginLogo = styled.div`
-    background-image: url(${logo});
-    height: 100px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    margin-bottom: 10px;
+  background-image: url(${logo});
+  height: 100px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-bottom: 10px;
 `;
