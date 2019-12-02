@@ -1,14 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Panel, View, Typography } from '../../components';
-import { ProjectManagerLogo } from './styles';
+import { Panel, View, Typography, Input } from '../../components';
+import { ProjectManagerLogo, ProjectManagerForm, ProjectManagerInputGroup, UploadFilesView } from './styles';
 
-const ProjectManager = ({ history, match: { params: { id } } }) => (
+const ProjectManager = ({ history }) => (
   <Panel>
     <ProjectManagerLogo />
     <View>
-      <Typography fontWeight="bold">{`ID: ${id}`}</Typography>
+      <ProjectManagerForm>
+        <ProjectManagerInputGroup>
+          <Input placeholder="SKU" />
+          <Input placeholder="Nome" />
+        </ProjectManagerInputGroup>
+        <ProjectManagerInputGroup>
+          <UploadFilesView>
+            <Typography fontStyle="italic">
+              Clique aqui ou arraste para cá os arquivos que serão criptografados.
+            </Typography>
+          </UploadFilesView>
+          <UploadFilesView>
+            <Typography fontStyle="italic">
+              Clique aqui ou arraste para cá os arquivos que serão criptografados.
+            </Typography>
+          </UploadFilesView>
+        </ProjectManagerInputGroup>
+      </ProjectManagerForm>
     </View>
   </Panel>
 );
