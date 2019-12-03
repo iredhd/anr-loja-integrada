@@ -6,6 +6,7 @@ import Panel from './Panel';
 import Typography from './Typography';
 import View from './View';
 import Logo from './Logo';
+import Dropzone from './Dropzone';
 
 export {
   Button,
@@ -15,5 +16,6 @@ export {
   Panel,
   Typography,
   View,
-  Logo
+  Logo,
+  Dropzone
 };

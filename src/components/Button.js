@@ -12,7 +12,7 @@ const StyledButton = styled(Button)`
   :hover {
     background-color: rgba(${({ color }) => color && Theme.DefaultColors[color] ? Theme.DefaultColors[color] : color}, 0.8);
     border-color: rgb(${({ color }) => color && Theme.DefaultColors[color] ? Theme.DefaultColors[color] : color}, 0.8); 
-    transform: scale(1.05);
+    transform: scale(1.02);
   }
 
   :disabled {

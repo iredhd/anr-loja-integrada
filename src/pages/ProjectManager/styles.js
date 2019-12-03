@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Form } from 'react-bootstrap';
 
-import { Logo, View } from '../../components';
+import { Logo, View, Button } from '../../components';
 
 export const ProjectManagerLogo = styled(Logo)`
   height: 100px;
@@ -20,17 +20,19 @@ export const ProjectManagerInputGroup = styled(Form.Group)`
   height: 50%;
   width: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  flex-direction: ${({ direction }) => direction || 'column'};
+  justify-content: ${({ justifycontent }) => justifycontent || 'space-between'};
 
   input {
-      margin: 5px 0px 5px 0px
+    margin: 5px 0px 5px 0px
   }
 `;
 
-export const UploadFilesView = styled(View)`
-  border: 1px dashed black;
-  padding: 20px;
-  text-align: center;
-  margin-top: 30px;
+export const ProjectManagerDropzoneContainer = styled(View)`
+  flex-direction: column;
+  margin-top: 15px;
+`;
+
+export const ProjectManagerSaveButton = styled(Button)`
+  width: 50%;
 `;
