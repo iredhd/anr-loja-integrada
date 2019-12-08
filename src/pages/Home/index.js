@@ -1,20 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Icon, View } from '../../components';
 import { HomePanel, HomeButton } from './styles';
 
 const Home = ({ history }) => {
   return (
     <HomePanel>
-      <HomeButton size="lg" icon="envelope" iconSize="2x" onClick={() => history.push('/send-order')}>
+      <HomeButton size="lg" onClick={() => history.push('/send-order')}>
+        <Icon
+          icon="envelope"
+          size="2x"
+        />
+        <View>
         Enviar
-        <br />
+          <br />
         Projetos
+        </View>
       </HomeButton>
-      <HomeButton size="lg" icon="cogs" iconSize="2x" onClick={() => history.push('/projects-manager')}>
-        Configurar
-        <br />
-        Projetos
+      <HomeButton size="lg" onClick={() => history.push('/projects-manager')}>
+        <Icon
+          icon="cogs"
+          size="2x"
+        />
+        <View>
+          Configurar
+          <br />
+          Projetos
+        </View>
       </HomeButton>
     </HomePanel>
   );

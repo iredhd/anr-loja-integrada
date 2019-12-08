@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import { View, Input, Icon, Typography } from '.';
+import { View, Input, Icon, Typography, Button, Modal } from '.';
 
 const getColor = ({ isDragAccept, isDragReject, theme }) => {
   if (isDragAccept) {
@@ -60,6 +60,10 @@ const getIconFile = name => {
   return iconExtensions[extension] || iconExtensions.UNDEFINED;
 };
 
+const DropzoneContainer = styled(View)`
+  flex-direction: column;
+`;
+
 const StyledDropzoneView = styled(View)`
   border: ${props => getBorder(props)};
   justify-content: center;
@@ -75,7 +79,13 @@ const StyledDropzoneView = styled(View)`
   }
 `;
 
-const Dropzone = ({ children, onDrop, acceptedTypes, files }) => {
+const Dropzone = ({ children, onDrop, acceptedTypes, files, onDeleteFileConfirm }) => {
+  const modalDeleteMessage = 'Você tem certeza que deseja excluir:';
+  const [modal, setModal] = useState({
+    isVisible: false,
+    body: ''
+  });
+
   const {
     getRootProps,
     getInputProps,
@@ -88,47 +98,83 @@ const Dropzone = ({ children, onDrop, acceptedTypes, files }) => {
   });
 
   return (
-    <StyledDropzoneView {...getRootProps({ isDragActive, isDragAccept, isDragReject })}>
-      <Input {...getInputProps()} />
+    <DropzoneContainer>
       {files.length > 0
-        ? files.map((file, _) => (
-          <DropzoneFileContainer key={_.toString()} name={file.name} />
-        ))
-        : children}
-    </StyledDropzoneView>
+        && files.map((file, index) => (
+          <DropzoneFileContainer
+            key={index.toString()}
+            name={file.name}
+            onDelete={() => setModal({
+              ...modal,
+              isVisible: true,
+              body: `${modalDeleteMessage} ${file.name} ?`,
+              file: index
+            })}
+          />
+        )) }
+      <StyledDropzoneView {...getRootProps({ isDragActive, isDragAccept, isDragReject })}>
+        <Input {...getInputProps()} />
+        {children}
+      </StyledDropzoneView>
+      <Modal
+        title="Atenção!"
+        isVisible={modal.isVisible}
+        onClose={() => setModal({ ...modal, isVisible: false })}
+        onCancel={() => setModal({ ...modal, isVisible: false })}
+        onConfirm={() => { onDeleteFileConfirm(modal.file); setModal({ ...modal, isVisible: false }); }}
+      >
+        <Typography>
+          {modal.body}
+        </Typography>
+      </Modal>
+    </DropzoneContainer>
   );
 };
 
-const DropzoneFileContainer = ({ name }) => {
+
+const DropzoneFileContainer = ({ name, onDelete }) => {
   const StyledFileContainer = styled(View)`
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
     border: 1px solid rgb(${({ theme }) => theme.DefaultColors.primary});
     border-radius: 5px;
-    padding: 15px;
-    width: 40%;
-    margin: 5px;
+    padding: 10px;
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
     overflow: hidden;
     text-overflow:ellipsis;
-
-    :hover {
-      transform: scale(1.01);
-    }
   `;
 
   const StyledTypography = styled(Typography)`
-    width: 100px;
+    width: 250px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    margin-top: 15px;
+    margin-left: 10px;
+    font-style: italic;
+  `;
+
+  const StyledInfoContainer = styled(View)`
+    flex-direction: row;
+    align-items: center;
+    flex-grow: unset;
+  `;
+
+  const StyledDeleteButton = styled(Button)`
+    margin: 0px;
   `;
 
   return (
     <StyledFileContainer>
-      <Icon icon={getIconFile(name)} size="3x" />
-      <StyledTypography>{name}</StyledTypography>
+      <StyledInfoContainer>
+        <Icon icon={getIconFile(name)} size="2x" />
+        <StyledTypography>{name}</StyledTypography>
+      </StyledInfoContainer>
+      <StyledDeleteButton color="danger" onClick={onDelete}>
+          Excluir
+      </StyledDeleteButton>
     </StyledFileContainer>
   );
 };
@@ -145,12 +191,14 @@ Dropzone.propTypes = {
     PropTypes.node
   ]),
   onDrop: PropTypes.func.isRequired,
+  onDeleteFileConfirm: PropTypes.func.isRequired,
   acceptedTypes: PropTypes.string,
   files: PropTypes.array
 };
 
 DropzoneFileContainer.propTypes = {
-  name: PropTypes.string.isRequired
+  name: PropTypes.string.isRequired,
+  onDelete: PropTypes.func.isRequired
 };
 
 export default Dropzone;

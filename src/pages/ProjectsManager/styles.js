@@ -31,3 +31,8 @@ export const ProjectCardActions = styled(View)`
   flex: 1;
   justify-content: flex-end;
 `;
+
+export const ProjectsManagerActionBar = styled(View)`
+  flex-direction: row;
+  justify-content: flex-end;
+`;

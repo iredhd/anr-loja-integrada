@@ -8,6 +8,7 @@ export default () => (
     <Route exact path="/" component={Login} />
     <Route exact path="/home" component={Home} />
     <Route exact path="/projects-manager" component={ProjectsManager} />
+    <Route exact path="/projects-manager/create" component={ProjectManager} />
     <Route exact path="/projects-manager/:id" component={ProjectManager} />
   </Switch>
 );

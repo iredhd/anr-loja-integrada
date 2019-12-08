@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import { Panel, View, Typography, Input, Dropzone } from '../../components';
 import { ProjectManagerLogo, ProjectManagerForm, ProjectManagerInputGroup, ProjectManagerDropzoneContainer, ProjectManagerSaveButton  } from './styles';
@@ -17,7 +18,7 @@ const ProjectManager = ({ history }) => {
       name: 'Projeto_Maleta_Tildinha.png'
     }]
   });
-  console.log(form);
+
   const onDropFiles = (file, type = 'regular') => {
     if (type === 'encryptable') {
       setForm({ ...form, encryptableFiles: [...form.encryptableFiles, ...file] });
@@ -28,7 +29,9 @@ const ProjectManager = ({ history }) => {
 
   return (
     <Panel>
-      <ProjectManagerLogo />
+      <Link to="/home">
+        <ProjectManagerLogo />
+      </Link>
       <View>
         <ProjectManagerForm>
           <ProjectManagerInputGroup>
@@ -48,8 +51,14 @@ const ProjectManager = ({ history }) => {
               <Typography fontWeight="bold">Arquivos criptografáveis:</Typography>
               <Dropzone
                 onDrop={file => onDropFiles(file, 'encryptable')}
-                acceptedTypes="image/*, .pdf"
+                acceptedTypes="image/*, application/pdf"
                 files={form.encryptableFiles}
+                onDeleteFileConfirm={indexToExclude => {
+                  setForm({
+                    ...form,
+                    encryptableFiles: form.encryptableFiles.filter((file, index) => index !== indexToExclude)
+                  });
+                }}
               >
                 <Typography fontStyle="italic">
               Clique aqui ou arraste para cá os arquivos que serão criptografados.
@@ -60,8 +69,14 @@ const ProjectManager = ({ history }) => {
               <Typography fontWeight="bold">Arquivos não criptografáveis:</Typography>
               <Dropzone
                 onDrop={file => onDropFiles(file)}
-                acceptedTypes="image/*, .pdf"
+                acceptedTypes="image/*, application/pdf"
                 files={form.regularFiles}
+                onDeleteFileConfirm={indexToExclude => {
+                  setForm({
+                    ...form,
+                    regularFiles: form.regularFiles.filter((file, index) => index !== indexToExclude)
+                  });
+                }}
               >
                 <Typography fontStyle="italic">
               Clique aqui ou arraste para cá os arquivos que serão criptografados.
