@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import { Login, Home, ProjectsManager, ProjectManager, OrderSender } from './pages';
+import { Login, Home, ProjectsManager, ProjectManager, OrderSender, NotFound } from './pages';
 
 export default () => (
   <Switch>
@@ -11,5 +11,6 @@ export default () => (
     <Route exact path="/projects-manager/create" component={ProjectManager} />
     <Route exact path="/projects-manager/:id" component={ProjectManager} />
     <Route exact path="/order-sender" component={OrderSender} />
+    <Route path="*" component={NotFound} />
   </Switch>
 );
