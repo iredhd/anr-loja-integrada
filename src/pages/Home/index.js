@@ -7,7 +7,7 @@ import { HomePanel, HomeButton } from './styles';
 const Home = ({ history }) => {
   return (
     <HomePanel>
-      <HomeButton size="lg" onClick={() => history.push('/send-order')}>
+      <HomeButton size="lg" onClick={() => history.push('/order-sender')}>
         <Icon
           icon="envelope"
           size="2x"

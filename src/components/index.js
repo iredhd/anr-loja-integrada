@@ -7,6 +7,7 @@ import View from './View';
 import Logo from './Logo';
 import Dropzone from './Dropzone';
 import Modal from './Modal';
+import ProgressBar from './ProgressBar';
 
 export {
   Button,
@@ -17,5 +18,6 @@ export {
   View,
   Logo,
   Dropzone,
-  Modal
+  Modal,
+  ProgressBar
 };

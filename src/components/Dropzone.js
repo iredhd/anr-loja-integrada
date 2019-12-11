@@ -111,7 +111,7 @@ const Dropzone = ({ children, onDrop, acceptedTypes, files, onDeleteFileConfirm 
               file: index
             })}
           />
-        )) }
+        ))}
       <StyledDropzoneView {...getRootProps({ isDragActive, isDragAccept, isDragReject })}>
         <Input {...getInputProps()} />
         {children}
@@ -130,7 +130,6 @@ const Dropzone = ({ children, onDrop, acceptedTypes, files, onDeleteFileConfirm 
     </DropzoneContainer>
   );
 };
-
 
 const DropzoneFileContainer = ({ name, onDelete }) => {
   const StyledFileContainer = styled(View)`
