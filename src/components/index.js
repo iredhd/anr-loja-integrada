@@ -8,6 +8,7 @@ import Logo from './Logo';
 import Dropzone from './Dropzone';
 import Modal from './Modal';
 import ProgressBar from './ProgressBar';
+import Alert from './Alert';
 
 export {
   Button,
@@ -19,5 +20,6 @@ export {
   Logo,
   Dropzone,
   Modal,
-  ProgressBar
+  ProgressBar,
+  Alert
 };
