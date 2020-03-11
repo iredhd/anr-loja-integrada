@@ -9,6 +9,7 @@ import Dropzone from './Dropzone';
 import Modal from './Modal';
 import ProgressBar from './ProgressBar';
 import Alert from './Alert';
+import PrivateRoute from './PrivateRoute';
 
 export {
   Button,
@@ -21,5 +22,6 @@ export {
   Dropzone,
   Modal,
   ProgressBar,
-  Alert
+  Alert,
+  PrivateRoute
 };

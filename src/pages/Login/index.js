@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import { LoginPanel, LoginForm, LoginButton, LoginInputGroup, LoginLogo } from './styles';
 import { Input, Alert } from '../../components';
+import { login } from '../../store/actions/User';
 import { Auth } from '../../services';
 
-const Login = ({ history }) => {
+const Login = ({ history, user, Auth }) => {
   const [isLoading, setLoading] = useState(false);
 
   const [form, setForm] = useState({
-    email: '',
-    password: ''
+    email: 'ighor.rios@gmail.com',
+    password: 'artes@2019'
   });
 
   const [alert, setAlert] = useState({
@@ -27,23 +29,25 @@ const Login = ({ history }) => {
       isVisible: false
     });
 
-    const { loggedIn, message } = await Auth.Login(form.email, form.password);
+    await Auth.Login({ ...form });
+    console.log('user', user);
+    // const { loggedIn, message } = await Auth.Login(form.email, form.password);
 
-    setLoading(false);
+    // setLoading(false);
 
-    if (!loggedIn) {
-      setAlert({
-        ...alert,
-        isVisible: true,
-        type: 'danger',
-        message,
-        title: 'Falha no login'
-      });
+    // if (!loggedIn) {
+    //   setAlert({
+    //     ...alert,
+    //     isVisible: true,
+    //     type: 'danger',
+    //     message,
+    //     title: 'Falha no login'
+    //   });
 
-      return;
-    }
+    //   return;
+    // }
 
-    history.push('/home');
+    // history.push('/home');
   };
 
   return (
@@ -88,4 +92,16 @@ Login.propTypes = {
   history: PropTypes.object.isRequired
 };
 
-export default Login;
+const mapStateToProps = ({ user }) => {
+  return {
+    user
+  };
+};
+
+const mapDispatchToProps = () => ({
+  Auth: {
+    Login: login
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
