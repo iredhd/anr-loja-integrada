@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import { LoginPanel, LoginForm, LoginButton, LoginInputGroup, LoginLogo } from './styles';
 import { Input, Alert } from '../../components';
 import { login } from '../../store/actions/User';
-import { Auth } from '../../services';
 
-const Login = ({ history, user, Auth }) => {
-  const [isLoading, setLoading] = useState(false);
+const Login = () => {
+  const user = useSelector(state => state.user);
+
+  const dispatch = useDispatch();
 
   const [form, setForm] = useState({
-    email: 'ighor.rios@gmail.com',
-    password: 'artes@2019'
+    email: 'igfh.e@gfji.com',
+    password: 'asd'
   });
 
   const [alert, setAlert] = useState({
@@ -24,32 +25,29 @@ const Login = ({ history, user, Auth }) => {
 
   const handleSignUp = async e => {
     e.preventDefault();
-    setLoading(true);
+
     setAlert({
       isVisible: false
     });
-
-    await Auth.Login({ ...form });
-    console.log('user', user);
-    // const { loggedIn, message } = await Auth.Login(form.email, form.password);
-
-    // setLoading(false);
-
-    // if (!loggedIn) {
-    //   setAlert({
-    //     ...alert,
-    //     isVisible: true,
-    //     type: 'danger',
-    //     message,
-    //     title: 'Falha no login'
-    //   });
-
-    //   return;
-    // }
-
-    // history.push('/home');
+    dispatch(login({ ...form }));
   };
 
+  useEffect(() => {
+    if (user.errorMessage) {
+      setAlert({
+        isVisible: true,
+        type: 'danger',
+        message: user.errorMessage,
+        title: 'Atenção!'
+      });
+    }
+  }, [user.loading, user.errorMessage]);
+
+  if (user.loggedIn) {
+    return (
+      <Redirect to="/home" />
+    );
+  }
   return (
     <LoginPanel>
       <LoginLogo />
@@ -79,29 +77,13 @@ const Login = ({ history, user, Auth }) => {
         <LoginButton
           variant="primary"
           type="submit"
-          disabled={isLoading}
+          disabled={user.loading}
         >
-          {isLoading ? 'Entrando...' : 'Entrar'}
+          {user.loading ? 'Entrando...' : 'Entrar'}
         </LoginButton>
       </LoginForm>
     </LoginPanel>
   );
 };
 
-Login.propTypes = {
-  history: PropTypes.object.isRequired
-};
-
-const mapStateToProps = ({ user }) => {
-  return {
-    user
-  };
-};
-
-const mapDispatchToProps = () => ({
-  Auth: {
-    Login: login
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login;

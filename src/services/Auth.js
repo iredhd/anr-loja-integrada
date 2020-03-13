@@ -1,21 +1,25 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import axios from 'axios';
+import 'firebase/firestore';
+
+import { User } from '.';
 
 export default class Auth {
   static async Login(email, password) {
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password);
       const uid = firebase.auth().currentUser.uid;
-      console.log('current', uid);
-      const user = await axios.get(
-        `${process.env.REACT_APP_FIREBASE_DATABASE_URL}/users/${uid}.json`
-      );
 
-      console.log('uer', user);
+      const user = await User.getUser(uid);
+
       return {
         loggedIn: true,
-        message: null
+        message: null,
+        user: {
+          ...user,
+          email,
+          id: uid
+        }
       };
     } catch (error) {
       const message = this.handleErrors(error);
@@ -33,14 +37,6 @@ export default class Auth {
     } catch (e) {
       console.log('error', e);
     }
-  }
-
-  static async getUID() {
-    return localStorage.getItem('uid');
-  }
-
-  static async setUID(uid) {
-    localStorage.setItem('uid', uid);
   }
 
   static handleErrors({ code }) {

@@ -1,11 +1,13 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import { Auth } from '.';
 
 export default class User {
-  static async getUser() {
-    const uid = await Auth.getUID();
-    console.log('uid', uid);
-    firebase.auth().getUser(uid);
+  static async getUser(id) {
+    const db = firebase.firestore();
+
+    const userDoc = await db.collection('users').doc(id).get();
+    const user = userDoc.data();
+
+    return user;
   }
 }

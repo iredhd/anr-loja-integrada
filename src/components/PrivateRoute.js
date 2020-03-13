@@ -1,10 +1,16 @@
 import React from 'react';
-import firebase from 'firebase/app';
-import 'firebase/auth';
 import { Route, Redirect } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const PrivateRoute = props => {
-  console.log(firebase.auth().currentUser);
+  const user = useSelector(state => state.user);
+
+  if (!user.loggedIn) {
+    return (
+      <Redirect to="/" />
+    );
+  }
+
   return (
     <Route {...props} />
   );

@@ -3,7 +3,10 @@ import { ActionTypes } from '../actions';
 const initialState = {
   name: null,
   email: null,
-  token: null
+  id: null,
+  errorMessage: null,
+  loggedIn: false,
+  loading: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -13,11 +16,26 @@ const reducer = (state = initialState, action) => {
         ...state,
         name: action.payload.name,
         email: action.payload.email,
-        token: action.payload.token
+        id: action.payload.id,
+        errorMessage: null,
+        loggedIn: true,
+        loading: false
       };
     case ActionTypes.USER_LOGGED_OUT:
       return {
         ...initialState
+      };
+    case ActionTypes.USER_REQUESTING_LOGIN:
+      return {
+        ...initialState,
+        loading: true
+      };
+    case ActionTypes.USER_FAIL_LOGIN:
+      return {
+        ...initialState,
+        errorMessage: action.payload.message,
+        loggedIn: false,
+        loading: false
       };
     default:
       return state;
