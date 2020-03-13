@@ -12,8 +12,8 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const [form, setForm] = useState({
-    email: 'igfh.e@gfji.com',
-    password: 'asd'
+    email: '',
+    password: ''
   });
 
   const [alert, setAlert] = useState({
