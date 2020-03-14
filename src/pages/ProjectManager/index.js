@@ -103,7 +103,7 @@ const ProjectManager = ({ history }) => {
                   <Typography fontWeight="bold">Arquivos criptografáveis: *</Typography>
                   <Dropzone
                     onDrop={file => onDropFiles(file, 'encryptable')}
-                    acceptedTypes="image/*, application/pdf"
+                    acceptedTypes="application/pdf"
                     files={form.encryptableFiles}
                     onDeleteFileConfirm={indexToExclude => {
                       setForm({
@@ -121,7 +121,7 @@ const ProjectManager = ({ history }) => {
                   <Typography fontWeight="bold">Arquivos não criptografáveis:</Typography>
                   <Dropzone
                     onDrop={file => onDropFiles(file)}
-                    acceptedTypes="image/*, application/pdf"
+                    acceptedTypes=".jpeg, .png, .jpg, .pes, .pdf"
                     files={form.regularFiles}
                     onDeleteFileConfirm={indexToExclude => {
                       setForm({
