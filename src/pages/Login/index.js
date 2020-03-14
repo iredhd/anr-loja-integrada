@@ -1,53 +1,89 @@
-import React, { useState } from 'react';
-import { Form } from 'react-bootstrap';
-import propTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import { LoginPanel, LoginForm, LoginButton, LoginInputGroup, LoginLogo } from './styles';
-import Input from '../../components/Input';
+import { Input, Alert } from '../../components';
+import { login } from '../../store/actions/User';
 
-const Login = props => {
-  const [isLoading, setLoading] = useState(false);
+const Login = () => {
+  const user = useSelector(state => state.user);
+
+  const dispatch = useDispatch();
+
   const [form, setForm] = useState({
-    user: '',
+    email: '',
     password: ''
   });
-  const handleSignUp = e => {
+
+  const [alert, setAlert] = useState({
+    isVisible: false,
+    type: null,
+    message: null,
+    title: ''
+  });
+
+  const handleSignUp = async e => {
     e.preventDefault();
-    setLoading(true);
-    // props.history.push('/home');
-    console.log(form);
+
+    setAlert({
+      isVisible: false
+    });
+    dispatch(login({ ...form }));
   };
 
+  useEffect(() => {
+    if (user.errorMessage) {
+      setAlert({
+        isVisible: true,
+        type: 'danger',
+        message: user.errorMessage,
+        title: 'Atenção!'
+      });
+    }
+  }, [user.loading, user.errorMessage]);
+
+  if (user.loggedIn) {
+    return (
+      <Redirect to="/home" />
+    );
+  }
   return (
     <LoginPanel>
       <LoginLogo />
+      {alert.isVisible && (
+        <Alert
+          type={alert.type}
+          onClose={() => setAlert({ isVisible: false })}
+          title={alert.title}
+          message={alert.message}
+        />
+      )}
       <LoginForm onSubmit={handleSignUp}>
         <LoginInputGroup>
           <Input
-            type="text"
-            placeholder="Usuário"
-            onChange={e => setForm({ ...form, user: e.target.value })}
+            type="email"
+            placeholder="E-mail"
+            value={form.email}
+            onChange={e => setForm({ ...form, email: e.target.value })}
           />
           <Input
             type="password"
             placeholder="Senha"
+            value={form.password}
             onChange={e => setForm({ ...form, password: e.target.value })}
           />
         </LoginInputGroup>
         <LoginButton
           variant="primary"
           type="submit"
-          disabled={isLoading}
+          disabled={user.loading}
         >
-          {isLoading ? 'Entrando...' : 'Entrar'}
+          {user.loading ? 'Entrando...' : 'Entrar'}
         </LoginButton>
       </LoginForm>
     </LoginPanel>
   );
-};
-
-Login.propTypes = {
-  history: propTypes.object.isRequired
 };
 
 export default Login;
