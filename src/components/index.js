@@ -10,6 +10,7 @@ import Modal from './Modal';
 import ProgressBar from './ProgressBar';
 import Alert from './Alert';
 import PrivateRoute from './PrivateRoute';
+import LoadingWrapper from './LoadingWrapper';
 
 export {
   Button,
@@ -23,5 +24,6 @@ export {
   Modal,
   ProgressBar,
   Alert,
-  PrivateRoute
+  PrivateRoute,
+  LoadingWrapper
 };

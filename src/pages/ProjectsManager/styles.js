@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Panel, View, Logo } from '../../components';
+import { Panel, View, Logo, LoadingWrapper } from '../../components';
 
 export const ProjectsManagerPanel = styled(Panel)`
   max-width: none;
@@ -35,4 +35,7 @@ export const ProjectCardActions = styled(View)`
 export const ProjectsManagerActionBar = styled(View)`
   flex-direction: row;
   justify-content: flex-end;
+`;
+
+export const ProjectsManagerLoadingWrapper = styled(LoadingWrapper)`
 `;

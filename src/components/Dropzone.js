@@ -147,7 +147,6 @@ const DropzoneFileContainer = ({ name, onDelete }) => {
   `;
 
   const StyledTypography = styled(Typography)`
-    width: 250px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;

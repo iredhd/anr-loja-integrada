@@ -1,6 +1,8 @@
 import React from 'react';
 import { ProgressBar as BoostrapProgressBar } from 'react-bootstrap';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+
 import Theme from '../styles/layout';
 
 const ProgressBar = ({ progress }) => {
@@ -15,6 +17,10 @@ const ProgressBar = ({ progress }) => {
   return (
     <StyledProgressBar animated now={progress} />
   );
+};
+
+ProgressBar.propTypes = {
+  progress: PropTypes.number.isRequired
 };
 
 export default ProgressBar;

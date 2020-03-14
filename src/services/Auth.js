@@ -44,23 +44,23 @@ export default class Auth {
 
     switch (code) {
       case 'auth/wrong-password':
-        message  = 'Usuário e/ou senha inválidos';
+        message = 'Usuário e/ou senha inválidos';
         break;
 
       case 'auth/invalid-email':
-        message  = 'E-mail inválido';
+        message = 'E-mail inválido';
         break;
 
       case 'auth/user-disabled':
-        message  = 'Usuário bloqueado';
+        message = 'Usuário bloqueado';
         break;
 
       case 'auth/user-not-found':
-        message  = 'Usuário não encontrado';
+        message = 'Usuário não encontrado';
         break;
 
       default:
-        message  = 'Erro interno, procure o adminstrador do sistema.';
+        message = 'Erro interno, procure o adminstrador do sistema.';
         break;
     }
 

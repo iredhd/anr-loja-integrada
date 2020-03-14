@@ -29,15 +29,17 @@ const Modal = ({ size, isVisible, title, children, onClose, onCancel, onConfirm 
         {children}
       </BootstrapModal.Body>
       <StyledModalFooter>
-        <Button onClick={onCancel} color="danger">Cancelar</Button>
-        <Button onClick={onConfirm}>Confirmar</Button>
+        {onCancel && <Button onClick={onCancel} color="danger">Cancelar</Button>}
+        {onConfirm && <Button onClick={onConfirm}>Confirmar</Button>}
       </StyledModalFooter>
     </BootstrapModal>
   );
 };
 
 Modal.defaultProps = {
-  size: 'md'
+  size: 'md',
+  onConfirm: null,
+  onCancel: null
 };
 
 Modal.propTypes = {
@@ -45,12 +47,12 @@ Modal.propTypes = {
   isVisible: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
-  onConfirm: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
   ]).isRequired,
-  onCancel: PropTypes.func.isRequired
+  onCancel: PropTypes.func
 };
 
 export default Modal;
