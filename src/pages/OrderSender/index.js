@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes  from 'prop-types';
 
-import { Panel, Input, Button, ProgressBar, Typography, View, Modal } from '../../components';
-import { OrderSenderLogo, OrderSenderSearchContainer, OrderSenderOrderContainer, OrderSenderOrderInfoContainer, OrderSenderSendContainer } from './styles';
+import { Input, Button, Typography, View, Modal, LoadingWrapper } from '../../components';
+import { OrderSenderPanel, OrderSenderLogo, OrderSenderSearchContainer, OrderSenderItemsContainer, OrderSenderItemContainer, OrderSenderOrderContainer, OrderSenderOrderInfoContainer, OrderSenderSendContainer } from './styles';
+import { Order } from '../../services';
 
 const OrderSender = ({ history }) => {
-  const [loading, setLoading] = useState({
-    isLoading: false,
-    progress: 0
-  });
+  const [isLoading, setLoading] = useState(false);
 
   const [form, setForm] = useState({
     orderId: ''
@@ -17,11 +15,62 @@ const OrderSender = ({ history }) => {
 
   const [modal, setModal] = useState({
     isVisible: false,
-    body: ''
+    body: '',
+    title: '',
+    action: null
   });
 
+  const [order, setOrder] = useState(null);
+
+  const closeModal = useCallback(() => setModal({
+    ...modal,
+    isVisible: false
+  }), [setModal, modal]);
+
+  const loadOrder = useCallback(() => {
+    if (!form.orderId.trim()) {
+      setModal({
+        isVisible: true,
+        body: (
+          <Typography>
+            Digite um código válido.
+          </Typography>
+        ),
+        title: 'Atenção!',
+        action: closeModal
+      });
+      return setForm({
+        ...form,
+        orderId: form.orderId.trim()
+      });
+    }
+
+    setLoading(true);
+    setOrder(null);
+    Order.getOrder(form.orderId.trim())
+      .then(order => {
+        setOrder({
+          ...order
+        });
+        setLoading(false);
+      })
+      .catch(() => {
+        setModal({
+          isVisible: true,
+          body: (
+            <Typography>
+              Pedido não encontrado.
+            </Typography>
+          ),
+          title: 'Atenção!',
+          action: closeModal
+        });
+        setLoading(false);
+      });
+  }, [setLoading, setModal, form, closeModal]);
+
   return (
-    <Panel>
+    <OrderSenderPanel>
       <Link to="/home">
         <OrderSenderLogo />
       </Link>
@@ -32,59 +81,86 @@ const OrderSender = ({ history }) => {
           onChange={text => setForm({ ...form, orderId: text.target.value })}
         />
         <Button
-          onClick={() => setLoading({ isLoading: true, progress: 0 })}
+          onClick={loadOrder}
         >
           Buscar
         </Button>
       </OrderSenderSearchContainer>
       <OrderSenderOrderContainer>
-        {loading.isLoading && <ProgressBar progress={loading.progress} />}
-        <OrderSenderOrderInfoContainer>
-          <View>
-            <Typography fontWeight="bold">Código:</Typography>
-            <Typography>91</Typography>
-          </View>
-          <View>
-            <Typography fontWeight="bold">Situação:</Typography>
-            <Typography>Pago</Typography>
-          </View>
-          <View>
-            <Typography fontWeight="bold">Cliente:</Typography>
-            <Typography>Ighor Redhd</Typography>
-          </View>
-          <View>
-            <Typography fontWeight="bold">Projetos:</Typography>
-            <Typography>[PROJETO] MALETA TILDINHA</Typography>
-          </View>
-          <OrderSenderSendContainer>
-            <Button
-              onClick={() => {
-                setModal({
-                  ...modal,
-                  isVisible: true,
-                  body: (
-                    <Typography>
-                      O projeto foi enviado com sucesso.
-                    </Typography>
-                  )
-                });
-              }}
-            >
-              Enviar
-            </Button>
-          </OrderSenderSendContainer>
-        </OrderSenderOrderInfoContainer>
+        <LoadingWrapper
+          isLoading={isLoading}
+        >
+          {
+            order ? (
+              <OrderSenderOrderInfoContainer>
+                <View>
+                  <Typography fontWeight="bold">Código:</Typography>
+                  <Typography>{order.id}</Typography>
+                </View>
+                <View>
+                  <Typography fontWeight="bold">Total:</Typography>
+                  <Typography>{`R$ ${order.total}`}</Typography>
+                </View>
+                <View>
+                  <Typography fontWeight="bold">Situação:</Typography>
+                  <Typography>{order.status.name}</Typography>
+                </View>
+                <View>
+                  <Typography fontWeight="bold">Cliente:</Typography>
+                  <Typography>{order.client.name}</Typography>
+                </View>
+                <View>
+                  <Typography fontWeight="bold">E-mail:</Typography>
+                  <Typography>{order.client.email}</Typography>
+                </View>
+                <View>
+                  <Typography fontWeight="bold">CPF/CNPJ:</Typography>
+                  <Typography>{order.client.personalId}</Typography>
+                </View>
+                <OrderSenderItemsContainer>
+                  <Typography fontWeight="bold">Itens:</Typography>
+                  {order.products.map(product => (
+                    <OrderSenderItemContainer key={product.sku}>
+                      <Typography>{product.name}</Typography>
+                    </OrderSenderItemContainer>
+                  ))}
+                </OrderSenderItemsContainer>
+                <OrderSenderSendContainer>
+                  <Button
+                    disabled={!['pedido_entregue', 'pedido_pago'].includes(order.status.code)}
+                    onClick={() => {
+                      setModal({
+                        ...modal,
+                        isVisible: true,
+                        body: (
+                          <Typography>
+                              O projeto foi enviado com sucesso.
+                          </Typography>
+                        )
+                      });
+                    }}
+                  >
+                    Enviar
+                  </Button>
+                </OrderSenderSendContainer>
+              </OrderSenderOrderInfoContainer>
+            ) : (
+              <Typography>
+              Digite o código do pedido.
+              </Typography>
+            )
+          }
+        </LoadingWrapper>
       </OrderSenderOrderContainer>
       <Modal
-        title="Projeto enviado!"
-        onConfirm={() => setModal({ ...modal, isVisible: false })}
-        onClose={() => setModal({ ...modal, isVisible: false })}
-        onCancel={() => setModal({ ...modal, isVisible: false })}
+        title={modal.title}
+        onConfirm={modal.action}
+        onClose={closeModal}
         isVisible={modal.isVisible}
       >
         {modal.body}
       </Modal>
-    </Panel>
+    </OrderSenderPanel>
   );
 };
 

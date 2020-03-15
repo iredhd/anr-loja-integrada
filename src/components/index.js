@@ -11,6 +11,7 @@ import ProgressBar from './ProgressBar';
 import Alert from './Alert';
 import PrivateRoute from './PrivateRoute';
 import LoadingWrapper from './LoadingWrapper';
+import ActivityIndicator from './ActivityIndicator';
 
 export {
   Button,
@@ -25,5 +26,6 @@ export {
   ProgressBar,
   Alert,
   PrivateRoute,
-  LoadingWrapper
+  LoadingWrapper,
+  ActivityIndicator
 };

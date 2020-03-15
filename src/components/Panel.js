@@ -12,6 +12,8 @@ const Panel = styled.div`
   min-width: 300px;
   max-width: 450px;
   box-shadow: 0 0 0 3px rgba(${({ color }) => color && Theme.DefaultColors[color] ? Theme.DefaultColors[color] : color},.5);
+  overflow-y: scroll;
+  max-height: 80%;
 `;
 
 Panel.defaultProps = {

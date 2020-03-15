@@ -1,19 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ProgressBar } from '.';
+import styled from 'styled-components';
 
-const LoadingWrapper = ({ isLoading, progressBarProps, children }) => (
-  isLoading ? <ProgressBar {...progressBarProps} /> : children
-);
+import { ActivityIndicator, View } from '.';
+
+const LoadingWrapper = ({ isLoading, children }) => {
+  const StyledContainer = styled(View)`
+    justify-content: center;
+  `;
+
+  return isLoading ? (
+    <StyledContainer>
+      <ActivityIndicator />
+    </StyledContainer>
+  ) : children;
+};
 
 LoadingWrapper.defaultProps = {
-  isLoading: false,
-  progressBarProps: {}
+  isLoading: false
 };
 
 LoadingWrapper.propTypes = {
   isLoading: PropTypes.bool,
-  progressBarProps: PropTypes.object,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node

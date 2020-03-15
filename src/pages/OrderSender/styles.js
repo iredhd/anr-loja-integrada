@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Logo, View } from '../../components';
+import { Logo, View, Typography, Panel } from '../../components';
 
 export const OrderSenderLogo = styled(Logo)`
     height: 100px;
@@ -35,4 +35,18 @@ export const OrderSenderSendContainer = styled(View)`
         max-width: 50%;
         margin-top: 20px;
     }
+`;
+
+export const OrderSenderItemsContainer = styled(View)`
+  flex-direction: column;
+`;
+
+export const OrderSenderItemContainer = styled(Typography)`
+  margin-top: 5px;
+  margin-bottom: 5px;
+`;
+
+export const OrderSenderPanel = styled(Panel)`
+  width: auto;
+  max-width: 90%;
 `;

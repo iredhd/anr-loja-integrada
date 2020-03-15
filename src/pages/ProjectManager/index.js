@@ -147,7 +147,6 @@ const ProjectManager = ({ history }) => {
         title="Atenção!"
         isVisible={modal.isVisible}
         onClose={closeModal}
-        // onCancel={closeModal}
         onConfirm={closeModal}
       >
         <Typography>
