@@ -50,3 +50,7 @@ export const OrderSenderPanel = styled(Panel)`
   width: auto;
   max-width: 90%;
 `;
+
+export const OrderSenderVerticalView = styled(View)`
+  flex-direction: column
+`;

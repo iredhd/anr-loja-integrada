@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes  from 'prop-types';
 
 import { Input, Button, Typography, View, Modal, LoadingWrapper } from '../../components';
-import { OrderSenderPanel, OrderSenderLogo, OrderSenderSearchContainer, OrderSenderItemsContainer, OrderSenderItemContainer, OrderSenderOrderContainer, OrderSenderOrderInfoContainer, OrderSenderSendContainer } from './styles';
+import { OrderSenderPanel, OrderSenderVerticalView, OrderSenderLogo, OrderSenderSearchContainer, OrderSenderItemsContainer, OrderSenderItemContainer, OrderSenderOrderContainer, OrderSenderOrderInfoContainer, OrderSenderSendContainer } from './styles';
 import { Order } from '../../services';
 
 const OrderSender = ({ history }) => {
@@ -69,6 +69,77 @@ const OrderSender = ({ history }) => {
       });
   }, [setLoading, setModal, form, closeModal]);
 
+  const sendOrder = useCallback((ignoredIds) => {
+    Order.sendOrder({
+      ...order,
+      products: order.products.filter(item => !ignoredIds.includes(item.sku))
+    });
+  }, [order]);
+
+  const prepareOrder = useCallback(async () => {
+    setLoading(true);
+    try {
+      const preparedInfo = await Order.prepareOrder(order);
+
+      let newModal = {
+        isVisible: true,
+        body: (
+          <Typography>
+            {`Você tem certeza que deseja enviar ${order.products.map(item => item.name)} para ${order.client.email}?`}
+          </Typography>
+        ),
+        title: 'Atenção!',
+        action: sendOrder
+      };
+
+      if (preparedInfo.canSend && preparedInfo.itemWillNotSent.length > 0) {
+        newModal = {
+          isVisible: true,
+          body: (
+            <OrderSenderVerticalView>
+              <Typography>
+                {
+                `Os seguintes itens não foram encontrados na base de projetos: ${preparedInfo.itemWillNotSent.map(item => item.name)}.`
+                }
+              </Typography>
+              <Typography>
+                {
+                `Serão enviados apenas os itens: ${order.products.filter(item => !preparedInfo.itemWillNotSent.map(notSent => notSent.sku).includes(item.sku)).map(item => item.name)}.`
+                }
+              </Typography>
+              <Typography>
+                Deseja enviar mesmo assim?
+              </Typography>
+            </OrderSenderVerticalView>
+          ),
+          title: 'Atenção!',
+          action: () => sendOrder(preparedInfo.itemWillNotSent.map(item => item.sku))
+        };
+      } else if (!preparedInfo.canSend) {
+        newModal = {
+          isVisible: true,
+          body: (
+            <OrderSenderVerticalView>
+              <Typography>
+                O pedido não será enviado pois nenhum dos projetos existem na base de dados.
+              </Typography>
+              <Typography>
+                Verifique se existem de fatos projetos no pedido a serem enviados e, se eles estão devidamente cadastrados no configurador de projetos.
+              </Typography>
+            </OrderSenderVerticalView>
+          ),
+          title: 'Atenção!',
+          action: closeModal
+        };
+      }
+
+      setModal(newModal);
+      setLoading(false);
+    } catch (e) {
+      console.log(e);
+    }
+  }, [order, sendOrder, closeModal]);
+
   return (
     <OrderSenderPanel>
       <Link to="/home">
@@ -127,18 +198,8 @@ const OrderSender = ({ history }) => {
                 </OrderSenderItemsContainer>
                 <OrderSenderSendContainer>
                   <Button
-                    disabled={!['pedido_entregue', 'pedido_pago'].includes(order.status.code)}
-                    onClick={() => {
-                      setModal({
-                        ...modal,
-                        isVisible: true,
-                        body: (
-                          <Typography>
-                              O projeto foi enviado com sucesso.
-                          </Typography>
-                        )
-                      });
-                    }}
+                    // disabled={!['pedido_entregue', 'pedido_pago'].includes(order.status.code)}
+                    onClick={prepareOrder}
                   >
                     Enviar
                   </Button>
