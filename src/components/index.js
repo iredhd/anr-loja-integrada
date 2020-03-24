@@ -12,6 +12,7 @@ import Alert from './Alert';
 import PrivateRoute from './PrivateRoute';
 import LoadingWrapper from './LoadingWrapper';
 import ActivityIndicator from './ActivityIndicator';
+import SystemVersion from './SystemVersion';
 
 export {
   Button,
@@ -27,5 +28,6 @@ export {
   Alert,
   PrivateRoute,
   LoadingWrapper,
-  ActivityIndicator
+  ActivityIndicator,
+  SystemVersion
 };

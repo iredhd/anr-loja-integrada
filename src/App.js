@@ -14,6 +14,8 @@ import history from './services/history';
 import Theme from './styles/layout';
 import { Auth, User } from './services';
 import { registerUser, logout } from './store/actions/User';
+import { version } from '../package.json';
+import { SystemVersion } from './components';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -46,13 +48,14 @@ export default () => {
       dispatch(logout());
     }
   });
-
+  console.log('version', version);
   return (
     <ThemeProvider theme={Theme}>
       <Router history={history}>
         <Routes />
         <GlobalStyles />
       </Router>
+      <SystemVersion />
     </ThemeProvider>
   );
 };

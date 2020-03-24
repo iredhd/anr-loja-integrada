@@ -1,34 +1,55 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 
-import { Icon, View } from '../../components';
-import { HomePanel, HomeButton } from './styles';
+import { Icon, View, Typography } from '../../components';
+import { HomePanel, HomeButton, HomeButtonsContainer, HomeLogoutButton } from './styles';
+import { logout } from '../../store/actions/User';
 
 const Home = ({ history }) => {
+  const dispatch = useDispatch();
+
+  const userLogout = useCallback(() => {
+    dispatch(logout());
+  }, [dispatch]);
+
   return (
     <HomePanel>
-      <HomeButton size="lg" onClick={() => history.push('/order-sender')}>
+      <HomeButtonsContainer>
+        <HomeButton size="lg" onClick={() => history.push('/order-sender')}>
+          <Icon
+            icon="envelope"
+            size="2x"
+          />
+          <View>
+            Enviar
+            <br />
+            Projetos
+          </View>
+        </HomeButton>
+        <HomeButton size="lg" onClick={() => history.push('/projects-manager')}>
+          <Icon
+            icon="cogs"
+            size="2x"
+          />
+          <View>
+            Configurar
+            <br />
+            Projetos
+          </View>
+        </HomeButton>
+      </HomeButtonsContainer>
+      <HomeLogoutButton
+        onClick={userLogout}
+      >
         <Icon
-          icon="envelope"
-          size="2x"
+          icon="sign-out-alt"
+          size="1x"
         />
-        <View>
-        Enviar
-          <br />
-        Projetos
-        </View>
-      </HomeButton>
-      <HomeButton size="lg" onClick={() => history.push('/projects-manager')}>
-        <Icon
-          icon="cogs"
-          size="2x"
-        />
-        <View>
-          Configurar
-          <br />
-          Projetos
-        </View>
-      </HomeButton>
+        <Typography>
+          Logout
+        </Typography>
+      </HomeLogoutButton>
     </HomePanel>
   );
 };

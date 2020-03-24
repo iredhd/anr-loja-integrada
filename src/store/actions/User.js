@@ -39,6 +39,12 @@ export const failLogin = message => ({
   }
 });
 
-export const logout = () => ({
-  type: ActionTypes.USER_LOGGED_OUT
-});
+export const logout = () => {
+  return async dispatch => {
+    await Auth.Logout();
+
+    dispatch({
+      type: ActionTypes.USER_LOGGED_OUT
+    });
+  };
+};
