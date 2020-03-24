@@ -52,7 +52,7 @@ export default class Order {
         errorMessage: null
       };
     } catch (e) {
-      const errorMessage = this.handleErrors(e.response.data.error);
+      const errorMessage = this.handleErrors(e.response ? e.response.data.error : null);
       return {
         success: false,
         successMessage: null,
