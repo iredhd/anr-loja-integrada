@@ -69,7 +69,7 @@ const OrderSender = ({ history }) => {
       });
   }, [setLoading, setModal, form, closeModal]);
 
-  const sendOrder = useCallback((ignoredIds) => {
+  const sendOrder = useCallback(() => {
     setModal({
       ...modal,
       isVisible: false
@@ -78,8 +78,7 @@ const OrderSender = ({ history }) => {
     setLoading(true);
 
     Order.sendOrder({
-      ...order,
-      products: order.products.filter(item => !ignoredIds.includes(item.sku))
+      ...order
     }).then(response => {
       setModal({
         isVisible: true,
@@ -144,7 +143,7 @@ const OrderSender = ({ history }) => {
             </OrderSenderVerticalView>
           ),
           title: 'Atenção!',
-          action: () => sendOrder(preparedInfo.itemWillNotSent.map(item => item.sku))
+          action: sendOrder
         };
       } else if (!preparedInfo.canSend) {
         newModal = {
@@ -230,7 +229,7 @@ const OrderSender = ({ history }) => {
                 </OrderSenderItemsContainer>
                 <OrderSenderSendContainer>
                   <Button
-                    // disabled={!['pedido_entregue', 'pedido_pago'].includes(order.status.code)}
+                    disabled={!['pedido_entregue', 'pedido_pago'].includes(order.status.code)}
                     onClick={prepareOrder}
                   >
                     Enviar
