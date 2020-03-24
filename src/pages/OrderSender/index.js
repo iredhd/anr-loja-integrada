@@ -113,7 +113,7 @@ const OrderSender = ({ history }) => {
       const preparedInfo = await Order.prepareOrder(order);
 
       let newModal = {
-        isVisible: false,
+        isVisible: true,
         body: (
           <Typography>
             {`Você tem certeza que deseja enviar ${order.products.map(item => item.name)} para ${order.client.email}?`}
