@@ -70,11 +70,42 @@ const OrderSender = ({ history }) => {
   }, [setLoading, setModal, form, closeModal]);
 
   const sendOrder = useCallback((ignoredIds) => {
+    setModal({
+      ...modal,
+      isVisible: false
+    });
+
+    setLoading(true);
+
     Order.sendOrder({
       ...order,
       products: order.products.filter(item => !ignoredIds.includes(item.sku))
+    }).then(response => {
+      setModal({
+        isVisible: true,
+        body: (
+          <Typography
+            fontColor={!response.success ? 'danger' : 'primary'}
+          >
+            {response.successMessage || response.errorMessage}
+          </Typography>
+        ),
+        title: response.success ? 'Sucesso!' : 'Ops!',
+        action: () => {
+          setModal({
+            ...modal,
+            isVisible: false
+          });
+        }
+      });
+      setOrder(null);
+      setOrder(false);
+      setForm({
+        orderId: ''
+      });
+      setLoading(false);
     });
-  }, [order]);
+  }, [order, modal, setModal]);
 
   const prepareOrder = useCallback(async () => {
     setLoading(true);
@@ -82,7 +113,7 @@ const OrderSender = ({ history }) => {
       const preparedInfo = await Order.prepareOrder(order);
 
       let newModal = {
-        isVisible: true,
+        isVisible: false,
         body: (
           <Typography>
             {`Você tem certeza que deseja enviar ${order.products.map(item => item.name)} para ${order.client.email}?`}
@@ -153,6 +184,7 @@ const OrderSender = ({ history }) => {
         />
         <Button
           onClick={loadOrder}
+          disabled={isLoading}
         >
           Buscar
         </Button>

@@ -7,7 +7,6 @@ import { useDispatch } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
-import axios from 'axios';
 
 import Routes from './routes';
 import GlobalStyles from './styles/global';
@@ -30,18 +29,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 library.add(fas);
-
-axios.defaults.baseURL = process.env.REACT_APP_LOJAINTEGRADA_BASE_URL;
-
-axios.interceptors.request.use(config => ({
-  ...config,
-  params: {
-    ...config.params,
-    format: 'json',
-    chave_api: process.env.REACT_APP_LOJAINTEGRADA_CHAVE_API,
-    chave_aplicacao: process.env.REACT_APP_LOJAINTEGRADA_CHAVE_APLICACAO
-  }
-}));
 
 export default () => {
   const dispatch = useDispatch();
