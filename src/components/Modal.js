@@ -4,12 +4,17 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import { Button } from '.';
+import Theme from '../styles/layout';
 
 const Modal = ({ size, isVisible, title, children, onClose, onCancel, onConfirm }) => {
   const StyledModalFooter = styled(BootstrapModal.Footer)`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+  `;
+
+  const StyledModalTitle = styled(BootstrapModal.Title)`
+    color: ${() => `rgb(${Theme.DefaultColors.primary})`};
   `;
 
   return (
@@ -21,9 +26,9 @@ const Modal = ({ size, isVisible, title, children, onClose, onCancel, onConfirm 
       centered
     >
       <BootstrapModal.Header closeButton>
-        <BootstrapModal.Title>
+        <StyledModalTitle>
           {title}
-        </BootstrapModal.Title>
+        </StyledModalTitle>
       </BootstrapModal.Header>
       <BootstrapModal.Body>
         {children}

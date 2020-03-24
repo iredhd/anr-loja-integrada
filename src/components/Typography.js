@@ -4,8 +4,8 @@ import Theme from '../styles/layout';
 
 const Typography = styled.span`
   font-size: ${({ fontSize }) => fontSize};
-  font-weight: ${({ fontWeight }) => fontWeight}
-  color: ${({ fontColor }) => fontColor};
+  font-weight: ${({ fontWeight }) => fontWeight};
+  color: ${({ fontColor }) => Theme.DefaultColors[fontColor] ? `rgb(${Theme.DefaultColors[fontColor]})` : fontColor};
   font-style: ${({ fontStyle }) => fontStyle};
   margin: 0px 3px 0px 3px;
 `;
