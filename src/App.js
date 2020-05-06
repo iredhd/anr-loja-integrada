@@ -14,7 +14,6 @@ import history from './services/history';
 import Theme from './styles/layout';
 import { Auth, User } from './services';
 import { registerUser, logout } from './store/actions/User';
-import { version } from '../package.json';
 import { SystemVersion } from './components';
 
 const firebaseConfig = {
@@ -48,7 +47,7 @@ export default () => {
       dispatch(logout());
     }
   });
-  console.log('version', version);
+
   return (
     <ThemeProvider theme={Theme}>
       <Router history={history}>

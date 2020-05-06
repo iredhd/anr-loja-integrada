@@ -24,7 +24,7 @@ const Home = ({ history }) => {
           <View>
             Enviar
             <br />
-            Projetos
+            Pedidos
           </View>
         </HomeButton>
         <HomeButton size="lg" onClick={() => history.push('/projects-manager')}>
@@ -36,6 +36,17 @@ const Home = ({ history }) => {
             Configurar
             <br />
             Projetos
+          </View>
+        </HomeButton>
+        <HomeButton size="lg" onClick={() => history.push('/courses-manager')}>
+          <Icon
+            icon="cogs"
+            size="2x"
+          />
+          <View>
+            Configurar
+            <br />
+            Cursos
           </View>
         </HomeButton>
       </HomeButtonsContainer>
