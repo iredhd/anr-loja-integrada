@@ -1,7 +1,8 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 
-import { Project } from '.';
+import { Project, Course } from '.';
+
 
 export default class Order {
   static async getOrder(id) {
@@ -62,25 +63,35 @@ export default class Order {
   }
 
   static async prepareOrder(order) {
-    const projects = await Promise.all(order.products.map(async item => {
+    const products = await Promise.all(order.products.map(async item => {
       try {
         const project = await Project.getProject(item.sku);
+
         return {
           ...project,
           exists: true
         };
       } catch (e) {
-        return {
-          sku: item.sku,
-          name: item.name,
-          exists: false
-        };
+        try {
+          const course = await Course.getCourse(item.sku);
+
+          return {
+            ...course,
+            exists: true
+          };
+        } catch (e) {
+          return {
+            sku: item.sku,
+            name: item.name,
+            exists: false
+          };
+        }
       }
     }));
 
     return {
-      canSend: projects.filter(item => item.exists).length > 0,
-      itemWillNotSent: projects.filter(item => !item.exists)
+      canSend: products.filter(item => item.exists).length > 0,
+      itemWillNotSent: products.filter(item => !item.exists)
     };
   }
 
@@ -92,8 +103,8 @@ export default class Order {
         return 'ID de pedido não encontrado. Contate o administrador do sistema.';
       case 'ORDER_NOT_FOUND':
         return 'Pedido não encontrado na loja, por favor verifique o código do pedido.';
-      case 'NO_PROJECTS_TO_SEND':
-        return 'Não existem projetos há serem enviados no pedido.';
+      case 'NO_PRODUCTS_TO_SEND':
+        return 'Não existem produtos à serem enviados no pedido.';
       default:
         return 'Erro desconhecido. Contate o administrador do sistema.';
     }
@@ -102,9 +113,9 @@ export default class Order {
   static handleSuccess(code) {
     switch (code) {
       case 'PARTIAL_SUCCESS':
-        return 'Foram enviados apenas os itens que são projetos e que estão configurados no sistema. Verifique o pedido na loja se por acaso não há mais itens a serem entregues.';
+        return 'Foram enviados apenas os itens que são projetos/cursos e que estão configurados no sistema. Verifique o pedido na loja se por acaso não há mais itens a serem entregues.';
       default:
-        return 'Todos os projetos foram enviados e o status foi alterado na loja!';
+        return 'Todos os produtos foram enviados e o status foi alterado na loja!';
     }
   }
 }

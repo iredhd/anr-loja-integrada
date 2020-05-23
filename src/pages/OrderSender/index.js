@@ -129,7 +129,7 @@ const OrderSender = ({ history }) => {
             <OrderSenderVerticalView>
               <Typography>
                 {
-                `Os seguintes itens não foram encontrados na base de projetos: ${preparedInfo.itemWillNotSent.map(item => item.name)}.`
+                `Os seguintes itens não foram encontrados na base de produtos: ${preparedInfo.itemWillNotSent.map(item => item.name)}.`
                 }
               </Typography>
               <Typography>
