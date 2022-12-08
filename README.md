@@ -5,9 +5,7 @@
 </h1>
 <p align="center">
   <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/iredhd/anr-loja-integrada.svg">
-
   <img alt="Repository size" src="https://img.shields.io/github/repo-size/iredhd/anr-loja-integrada.svg">
-
   <a href="https://github.com/iredhd/trailspot/issues">
     <img alt="Repository issues" src="https://img.shields.io/github/issues/iredhd/anr-loja-integrada.svg">
   </a>
