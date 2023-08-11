@@ -41,7 +41,8 @@ export default class Order {
         id: order.id
       }, {
         headers: {
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
+          'Access-Control-Allow-Origin': '*'
         }
       });
 
